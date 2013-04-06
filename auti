@@ -1,0 +1,82 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+
+namespace Auta
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        
+        
+        Form2 X = new Form2();
+       
+
+        struct unos
+        {
+            public int brSas;
+            public string Marka, Ime;
+            public float CO2;
+        };
+
+        List<unos> lista = new List<unos>();
+        private void button1_Click(object sender, EventArgs e)
+        {
+            unos novi = new unos();
+
+            if (!int.TryParse(textBox1.Text, out novi.brSas))
+            {
+                MessageBox.Show("Ne unositi tekst u brojeve jeboga ti", "NE");
+            }
+            else
+            {
+
+                novi.Marka = textBox2.Text;
+                novi.Ime = textBox3.Text;
+                if (!float.TryParse(textBox4.Text, out novi.CO2))
+                {
+                    MessageBox.Show("Ne unositi tekst u brojeve jeboga ti", "NE");
+                }
+                else
+                {
+
+                    lista.Add(novi);
+                }
+
+                textBox1.Clear();
+                textBox2.Clear();
+                textBox3.Clear();
+                textBox4.Clear();
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            X.refBack = this; 
+            this.Hide();
+            X.Show();
+
+
+            string poruka = "";
+            foreach (unos jedan in lista)
+            {
+                poruka += "Automobil:\n "; 
+                poruka += "\nBroj šasije: " + jedan.brSas;
+                poruka += "\nMarka automobila: " + jedan.Marka;
+                poruka += "\nIme automobila: " + jedan.Ime;
+                poruka += "\nIspuh CO2: " + jedan.CO2+"\n\n";
+            }
+
+            X.richTextBox1.Text = poruka;
+        }
+    }
+}
